@@ -76,11 +76,23 @@ def is_valid_compound_key(type_name: str, key: str, schema: Schema):
 
 def get_attributed_fields(attribute: str, schema: Schema):
     fields = {}
+
     for type_name, type_ in schema.graphql_schema.type_map.items():
         if not hasattr(type_, "graphene_type"):
             continue
-        for field in list(type_.graphene_type._meta.fields):
-            if getattr(getattr(type_.graphene_type, field), attribute, False):
-                fields[type_name] = type_.graphene_type
-                continue
+
+        # Check to prevent accessing `fields` attribute of Scalars in schema type-map,
+        # which would result in AttributeError
+        if hasattr(type_.graphene_type._meta, "fields"):
+            for field in list(type_.graphene_type._meta.fields):
+
+                # Some ORM connectors (eg: Graphene-mongo, on using MongoEngineObjectType) store field names in
+                # `graphene_type._meta.fields`, but won't add them as `graphene_type` class attributes.
+                if hasattr(type_.graphene_type, field):
+
+                    field_ = getattr(type_.graphene_type, field)
+                    if getattr(field_, attribute, False):
+                        fields[type_name] = type_.graphene_type
+                        continue
+
     return fields
