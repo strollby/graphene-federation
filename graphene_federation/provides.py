@@ -43,7 +43,7 @@ def provides(field, fields: Union[str, list[str]] = None):
 
 def get_provides_fields(schema: Schema) -> dict:
     """
-    Find all the extended types from the schema.
+    Find all the `provided` types from the schema.
     They can be easily distinguished from the other type as
     the `@provides` decorator adds a `_provides` attribute to them.
     """
