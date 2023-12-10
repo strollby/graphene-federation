@@ -24,9 +24,10 @@ def build_schema(
     query: Optional[ObjectType] = None,
     mutation: Optional[ObjectType] = None,
     enable_federation_2=False,
+    schema: Optional[Schema] = None,
     **kwargs
 ) -> Schema:
-    schema = Schema(query=query, mutation=mutation, **kwargs)
+    schema = schema or Schema(query=query, mutation=mutation, **kwargs)
     schema.auto_camelcase = kwargs.get("auto_camelcase", True)
     schema.federation_version = 2 if enable_federation_2 else 1
     federation_query = _get_query(schema, query)
