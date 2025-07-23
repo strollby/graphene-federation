@@ -36,7 +36,7 @@ setup(
     install_requires=[
         "graphene>=3.1",
         "graphql-core>=3.1",
-        "graphene-directives>=0.4.6",
+        "graphene-directives>=0.4.7",
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -49,6 +49,7 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
     ],
     extras_require={
         "test": tests_require,
