@@ -3,11 +3,11 @@
 # -------------------------
 
 integration-build: ## Build environment for integration tests
-	cd integration_tests && docker-compose build
+	cd integration_tests && docker compose build
 .PHONY: integration-build
 
 integration-tests: ## Run integration tests
-	cd integration_tests && docker-compose down && docker-compose run --rm tests
+	cd integration_tests && docker compose down && docker compose run --rm tests
 .PHONY: integration-test
 
 # -------------------------
@@ -15,19 +15,19 @@ integration-tests: ## Run integration tests
 # -------------------------
 
 dev-setup: ## Install development dependencies
-	docker-compose up --build -d
+	docker compose up --build -d
 .PHONY: dev-setup
 
 tests: ## Run unit tests
-	docker-compose run graphene_federation py.test tests --cov=graphene_federation -vv
+	docker compose run --rm --remove-orphans graphene_federation py.test tests --cov=graphene_federation -vv
 .PHONY: tests
 
 check-style: ## Run linting
-	docker-compose run graphene_federation black graphene_federation --check
+	docker compose run --rm graphene_federation black graphene_federation --check
 .PHONY: check-style
 
 check-types: ## Run typing check
-	docker-compose run graphene_federation mypy graphene_federation
+	docker compose run --rm graphene_federation mypy graphene_federation
 .PHONY: check-types
 
 # -------------------------
