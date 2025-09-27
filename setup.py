@@ -7,7 +7,7 @@ def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 
-version = "3.2.0"
+version = "3.3.0"
 
 tests_require = [
     "pytest==7.1.2",
@@ -36,7 +36,7 @@ setup(
     install_requires=[
         "graphene>=3.1",
         "graphql-core>=3.1",
-        "graphene-directives>=0.4.7",
+        "graphene-directives>=0.4.8",
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
