@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Union
+from typing import Optional, Union
 
 from graphene import Field, Interface, NonNull, ObjectType
 from graphene.types.definitions import (
@@ -139,10 +139,13 @@ def get_type_for_field(
 AST FUNCTIONS 
 
 For @key, @provides, @requires FieldSet Parsing
+For @fromContext Parsing
 """
 
 
-def _tokenize_field_set(fields: str, directive_name: str) -> list[str]:
+def _tokenize_field_set(
+    fields: str, directive_name: str, additional_valid_special_characters: set[str]
+) -> list[str]:
     """
     Splits the fields string to tokens
     """
@@ -217,6 +220,8 @@ def _tokenize_field_set(fields: str, directive_name: str) -> list[str]:
             elif current_token:
                 tokens.append(current_token)
             current_token = ""
+        elif char in additional_valid_special_characters:
+            current_token += char
         else:
             if current_token:
                 tokens.append(current_token)
@@ -293,14 +298,24 @@ def evaluate_ast(
             )
 
 
-def build_ast(fields: str, directive_name: str) -> dict:
+def build_ast(
+    fields: str,
+    directive_name: str,
+    additional_valid_special_characters: Optional[set[str]] = None,
+) -> dict:
     """
     Converts the fields string to an AST tree
 
     :param fields: string fields
     :param directive_name: name of the directive
+    :param additional_valid_special_characters: additional valid special characters
     """
-    cleaned_fields = _tokenize_field_set(fields, directive_name)
+    if additional_valid_special_characters is None:
+        additional_valid_special_characters = set()
+
+    cleaned_fields = _tokenize_field_set(
+        fields, directive_name, additional_valid_special_characters
+    )
 
     parent: dict[str, dict] = {}
     field_stack: list[str] = []

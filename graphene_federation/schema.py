@@ -64,15 +64,15 @@ def _add_sharable_to_page_info_type(
 
 
 def build_schema(
-    query: Union[ObjectType, Type[ObjectType]] = None,
-    mutation: Union[ObjectType, Type[ObjectType]] = None,
-    subscription: Union[ObjectType, Type[ObjectType]] = None,
-    types: Collection[Union[ObjectType, Type[ObjectType]]] = None,
-    directives: Union[Collection[ComposableDirective], None] = None,
-    include_graphql_spec_directives: bool = True,
-    schema_directives: Collection[SchemaDirective] = None,
+    query: Optional[Union[ObjectType, Type[ObjectType]]] = None,
+    mutation: Optional[Union[ObjectType, Type[ObjectType]]] = None,
+    subscription: Optional[Union[ObjectType, Type[ObjectType]]] = None,
+    types: Optional[Collection[Union[ObjectType, Type[ObjectType]]]] = None,
+    directives: Optional[Union[Collection[ComposableDirective], None]] = None,
+    include_graphql_spec_directives: Optional[bool] = True,
+    schema_directives: Optional[Collection[SchemaDirective]] = None,
     auto_camelcase: bool = True,
-    federation_version: FederationVersion = None,
+    federation_version: Optional[FederationVersion] = None,
 ) -> Schema:
     """
     Build Schema.

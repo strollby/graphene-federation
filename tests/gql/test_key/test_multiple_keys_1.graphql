@@ -1,5 +1,5 @@
 extend schema
-	@link(url: "https://specs.apollo.dev/federation/v2.7", import: ["@key"])
+	@link(url: "https://specs.apollo.dev/federation/v2.11", import: ["@key"])
 
 type Query {
   user: User
@@ -30,3 +30,8 @@ scalar federation__Scope
 
 """This string-serialized scalar represents an authorization policy."""
 scalar federation__Policy
+
+"""
+Contains the name of a defined context and a selection of a field from the context's type
+"""
+scalar federation__ContextFieldValue

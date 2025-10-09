@@ -40,7 +40,7 @@ def _parse_string_literal(value_node: ValueNode, _variables: Any = None) -> str:
 
 
 # Reference: https://www.apollographql.com/docs/federation/subgraph-spec/
-FederationScope = GraphQLScalarType(
+Scope = GraphQLScalarType(
     name="federation__Scope",
     description="This string-serialized scalar represents a JWT scope",
     serialize=_serialize_string,

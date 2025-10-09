@@ -38,13 +38,17 @@ If you need to use a version compatible with `graphene` v2 I recommend using the
 - [x] v2.3
 - [x] v2.4
 - [x] v2.5 
-- [x] v2.6 `STABLE_VERSION` . Rover dev supports only upto v2.6
-- [x] v2.7 `LATEST_VERSION`
+- [x] v2.6
+- [x] v2.7
+- [x] v2.8
+- [x] v2.9
+- [x] v2.10
+- [x] v2.11 `STABLE_VERSION`,`LATEST_VERSION`
 
 All directives could be easily integrated with the help of [graphene-directives](https://github.com/strollby/graphene-directives). 
 Now every directive's values are validated at run time itself by [graphene-directives](https://github.com/strollby/graphene-directives).
 
-### Directives (v2.7)
+### Directives (v2.11)
 
 ```graphql
 directive @composeDirective(name: String!) repeatable on SCHEMA
@@ -84,21 +88,38 @@ directive @authenticated on
   | INTERFACE
   | SCALAR
   | ENUM
-directive @requiresScopes(scopes: [[federation__Scope!]!]!) on
+directive @requiresScopes(scopes: [[Scope!]!]!) on
     FIELD_DEFINITION
   | OBJECT
   | INTERFACE
   | SCALAR
   | ENUM
-directive @policy(policies: [[federation__Policy!]!]!) on
+directive @policy(policies: [[Policy!]!]!) on
   | FIELD_DEFINITION
   | OBJECT
   | INTERFACE
   | SCALAR
   | ENUM
+directive @context(name: String!) on OBJECT | INTERFACE | UNION
+directive @fromContext(field: ContextFieldValue) on ARGUMENT_DEFINITION
+directive @listSize(
+  assumedSize: Int
+  slicingArguments: [String!]
+  sizedFields: [String!]
+  requireOneSlicingArgument: Boolean = true
+) on FIELD_DEFINITION
+directive @cost(weight: Int!) on
+    ARGUMENT_DEFINITION
+  | ENUM
+  | FIELD_DEFINITION
+  | INPUT_FIELD_DEFINITION
+  | OBJECT
+  | SCALAR
+  | ENUM
 scalar federation__Policy
 scalar federation__Scope
 scalar FieldSet
+scalar federation__ContextFieldValue
 ```
 
 Read about directives in [official documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives)
@@ -429,10 +450,6 @@ schema = build_schema(query=Query, federation_version=LATEST_VERSION) # auto_cam
 ```
 
 ------------------------
-
-## Known Issues
-
-- Using `@composeDirective` with `@link` in Federation `v2.6` shows error in rover, rover cli only supports upto `v2.5` as of 16/01/2024
 
 ## Contributing
 

@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Optional
 
 from graphene_directives import directive_decorator
 
@@ -13,7 +13,7 @@ from .utils import is_non_field
 def override(
     graphene_type,
     from_: str,
-    label: str = None,
+    label: Optional[str] = None,
     *,
     federation_version: FederationVersion = LATEST_VERSION,
 ) -> Callable:

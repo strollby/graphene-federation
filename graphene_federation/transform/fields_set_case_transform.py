@@ -3,7 +3,7 @@ from graphene_directives import Schema
 from graphene_federation.validators import InternalNamespace, to_case
 
 
-def field_set_case_transform(inputs: dict, schema: Schema) -> dict:
+def fields_set_case_transform(inputs: dict, schema: Schema) -> dict:
     """
     Transform the fields from internal representation to schema representation
 

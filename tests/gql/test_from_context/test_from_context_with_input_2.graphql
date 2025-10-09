@@ -1,0 +1,28 @@
+extend schema
+	@link(url: "https://specs.apollo.dev/federation/v2.11", import: ["@from_context"])
+
+type Query {
+  acme: Acme
+}
+
+type Acme  {
+  id: ID!
+  age: Int
+  foo(someInput: String @from_context(field: "$context1 ... on A { someField } ... on B { someField } ... on C { someOtherField }")): String
+}
+
+"""
+A string-serialized scalar represents a set of fields that's passed to a federated directive, such as @key, @requires, or @provides
+"""
+scalar FieldSet
+
+"""This string-serialized scalar represents a JWT scope"""
+scalar federation__Scope
+
+"""This string-serialized scalar represents an authorization policy."""
+scalar federation__Policy
+
+"""
+Contains the name of a defined context and a selection of a field from the context's type
+"""
+scalar federation__ContextFieldValue

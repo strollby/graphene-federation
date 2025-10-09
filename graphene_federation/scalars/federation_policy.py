@@ -44,7 +44,7 @@ def _parse_string_literal(value_node: ValueNode, _variables: Any = None) -> str:
 
 
 # Reference: https://www.apollographql.com/docs/federation/subgraph-spec/
-FederationPolicy = GraphQLScalarType(
+Policy = GraphQLScalarType(
     name="federation__Policy",
     description="This string-serialized scalar represents an authorization policy.",
     serialize=_serialize_string,

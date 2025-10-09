@@ -18,7 +18,7 @@ class ComposableDirective(GraphQLDirective):
         description: Optional[str] = None,
         extensions: Optional[Dict[str, Any]] = None,
         ast_node: Optional[DirectiveDefinitionNode] = None,
-        spec_url: str = None,
+        spec_url: Optional[str] = None,
         add_to_schema_directives: bool = True,
     ) -> None:
         """

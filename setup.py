@@ -7,17 +7,17 @@ def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 
-version = "3.2.0"
+version = "3.3.0"
 
 tests_require = [
-    "pytest==7.1.2",
+    "pytest==8.4.2",
     "pytest-cov",
 ]
 
 dev_require = [
     "black==23.12.1",
-    "flake8==4.0.1",
-    "mypy==0.961",
+    "flake8==7.3.0",
+    "mypy==1.18.2",
 ] + tests_require
 
 setup(
@@ -36,19 +36,18 @@ setup(
     install_requires=[
         "graphene>=3.1",
         "graphql-core>=3.1",
-        "graphene-directives>=0.4.6",
+        "graphene-directives>=0.5.0",
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Libraries",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
     ],
     extras_require={
         "test": tests_require,
