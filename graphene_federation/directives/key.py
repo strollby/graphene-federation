@@ -1,4 +1,4 @@
-from typing import Any, Union
+from typing import Any, Optional, Union
 
 from graphene_directives import directive_decorator
 
@@ -13,9 +13,9 @@ from .utils import is_non_field
 
 def key(
     fields: Union[str, list[str]],
-    resolvable: bool = None,
+    resolvable: Optional[bool] = None,
     *,
-    auto_case: bool = True,
+    auto_case: Optional[bool] = True,
     federation_version: FederationVersion = LATEST_VERSION,
 ) -> Any:
     """

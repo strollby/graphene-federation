@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Union
+from typing import Optional, Union
 
 from graphene import Field, Interface, NonNull, ObjectType
 from graphene.types.definitions import (
@@ -301,7 +301,7 @@ def evaluate_ast(
 def build_ast(
     fields: str,
     directive_name: str,
-    additional_valid_special_characters: set[str] = None,
+    additional_valid_special_characters: Optional[set[str]] = None,
 ) -> dict:
     """
     Converts the fields string to an AST tree

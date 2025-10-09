@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v5
-    - name: Set up Python 3.11
+    - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11'
+        python-version: '3.14'
     - name: Build wheel and source tarball
       run: |
         python -m pip install --upgrade pip

@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Optional
 
 from graphene_directives import directive_decorator
 
@@ -12,10 +12,10 @@ from .utils import is_non_field
 
 def list_size(
     graphene_type,
-    assumed_size: int = None,
-    slicing_arguments: list[str] = None,
-    sized_fields: list[str] = None,
-    require_one_slicing_argument: bool = None,
+    assumed_size: Optional[int] = None,
+    slicing_arguments: Optional[list[str]] = None,
+    sized_fields: Optional[list[str]] = None,
+    require_one_slicing_argument: Optional[bool] = None,
     *,
     federation_version: FederationVersion = LATEST_VERSION,
 ) -> Callable:
