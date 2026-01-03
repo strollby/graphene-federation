@@ -15,3 +15,4 @@ class FederationVersion(Enum):
     VERSION_2_9 = "2.9"
     VERSION_2_10 = "2.10"
     VERSION_2_11 = "2.11"
+    VERSION_2_12 = "2.12"

@@ -13,12 +13,13 @@ from .v2_8 import get_directives as get_directives_v2_8
 from .v2_9 import get_directives as get_directives_v2_9
 from .v2_10 import get_directives as get_directives_v2_10
 from .v2_11 import get_directives as get_directives_v2_11
+from .v2_12 import get_directives as get_directives_v2_12
 from .version import FederationVersion
 
-LATEST_VERSION = FederationVersion.VERSION_2_11
+LATEST_VERSION = FederationVersion.VERSION_2_12
 
 # Stable version is determined with the latest version that rover cli supports
-STABLE_VERSION = FederationVersion.VERSION_2_11
+STABLE_VERSION = FederationVersion.VERSION_2_12
 
 
 def get_directives_based_on_version(
@@ -55,8 +56,10 @@ def get_directives_based_on_version(
         return get_directives_v2_10()
     if federation_version == FederationVersion.VERSION_2_11:
         return get_directives_v2_11()
+    if federation_version == FederationVersion.VERSION_2_12:
+        return get_directives_v2_12()
 
-    return get_directives_v2_11()
+    return get_directives_v2_12()
 
 
 def get_directive_from_name(

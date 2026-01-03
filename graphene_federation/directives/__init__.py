@@ -1,4 +1,5 @@
 from .authenticated import authenticated
+from .cache_tag import cache_tag
 from .context import context
 from .cost import cost
 from .extends import extends
