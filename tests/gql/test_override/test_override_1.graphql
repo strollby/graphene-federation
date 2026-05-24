@@ -1,5 +1,5 @@
 extend schema
-	@link(url: "https://specs.apollo.dev/federation/v2.12", import: ["@override"])
+	@link(url: "https://specs.apollo.dev/federation/v2.14", import: ["@override"])
 
 type Query {
   product: Product

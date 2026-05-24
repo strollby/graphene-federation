@@ -43,12 +43,15 @@ If you need to use a version compatible with `graphene` v2 I recommend using the
 - [x] v2.8
 - [x] v2.9
 - [x] v2.10
-- [x] v2.11 `STABLE_VERSION`,`LATEST_VERSION`
+- [x] v2.11 
+- [x] v2.12 
+- [x] v2.13
+- [x] v2.14 `STABLE_VERSION`,`LATEST_VERSION`
 
 All directives could be easily integrated with the help of [graphene-directives](https://github.com/strollby/graphene-directives). 
 Now every directive's values are validated at run time itself by [graphene-directives](https://github.com/strollby/graphene-directives).
 
-### Directives (v2.11)
+### Directives (v2.14)
 
 ```graphql
 directive @composeDirective(name: String!) repeatable on SCHEMA
@@ -88,20 +91,20 @@ directive @authenticated on
   | INTERFACE
   | SCALAR
   | ENUM
-directive @requiresScopes(scopes: [[Scope!]!]!) on
+directive @requiresScopes(scopes: [[federation__Scope!]!]!) on
     FIELD_DEFINITION
   | OBJECT
   | INTERFACE
   | SCALAR
   | ENUM
-directive @policy(policies: [[Policy!]!]!) on
+directive @policy(policies: [[federation__Policy!]!]!) on
   | FIELD_DEFINITION
   | OBJECT
   | INTERFACE
   | SCALAR
   | ENUM
 directive @context(name: String!) on OBJECT | INTERFACE | UNION
-directive @fromContext(field: ContextFieldValue) on ARGUMENT_DEFINITION
+directive @fromContext(field: federation__ContextFieldValue) on ARGUMENT_DEFINITION
 directive @listSize(
   assumedSize: Int
   slicingArguments: [String!]
@@ -116,6 +119,7 @@ directive @cost(weight: Int!) on
   | OBJECT
   | SCALAR
   | ENUM
+directive @cacheTag(format: String!) repeatable on FIELD_DEFINITION | OBJECT
 scalar federation__Policy
 scalar federation__Scope
 scalar FieldSet
