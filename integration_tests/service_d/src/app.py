@@ -1,6 +1,6 @@
 from flask import Flask
 
-from graphql_server.flask import GraphQLView
+from graphql_server.flask.views import GraphQLView
 
 from schema import schema
 

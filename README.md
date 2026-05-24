@@ -458,10 +458,10 @@ schema = build_schema(query=Query, federation_version=LATEST_VERSION) # auto_cam
 ## Contributing
 
 * You can run the unit tests by doing: `make tests`.
-* You can run the integration tests by doing `make integration-build && make integration-test`.
+* You can run the integration tests by doing `make integration-build && make integration-tests`.
 * You can get a development environment (on a Docker container) with `make dev-setup`.
 * You should use `black` to format your code.
 
-The tests are automatically run on Travis CI on push to GitHub.
+The tests are automatically run on GitHub Actions on push to GitHub.
 
 ---------------------------

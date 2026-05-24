@@ -1,9 +1,6 @@
 import graphene
-from graphene import Interface
 
-from graphene_federation.shareable import shareable
-
-from graphene_federation import LATEST_VERSION, build_schema
+from graphene_federation import LATEST_VERSION, build_schema, shareable
 
 
 @shareable

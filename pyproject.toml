@@ -1,0 +1,57 @@
+[project]
+name = "graphene-federation"
+version = "3.3.0"
+description = "Federation implementation for graphene"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Igor Kasianov", email = "super.hang.glider@gmail.com" }]
+keywords = ["graphene", "graphql", "gql", "federation"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "graphene>=3.1",
+    "graphql-core>=3.1",
+    "graphene-directives>=0.5.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/graphql-python/graphene-federation"
+"Source Code" = "https://github.com/graphql-python/graphene-federation"
+Download = "https://github.com/graphql-python/graphene-federation/archive/3.3.0.tar.gz"
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+]
+dev = [
+    "black==26.5.1",
+    "flake8==7.3.0",
+    "mypy==2.1.0",
+    "pytest",
+    "pytest-cov",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["graphene_federation"]
+
+[tool.black]
+target-version = ["py314"]
+
+[tool.mypy]
+files = "**/*.py"
+namespace_packages = true
+ignore_missing_imports = true

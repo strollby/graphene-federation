@@ -17,15 +17,13 @@ def test_custom_scalar():
         base = String
 
         @staticmethod
-        def coerce_address(value: Any):
-            ...
+        def coerce_address(value: Any): ...
 
         serialize = coerce_address
         parse_value = coerce_address
 
         @staticmethod
-        def parse_literal(ast):
-            ...
+        def parse_literal(ast): ...
 
     @shareable
     class TestScalar(graphene.ObjectType):

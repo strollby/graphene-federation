@@ -19,7 +19,7 @@ dev-setup: ## Install development dependencies
 .PHONY: dev-setup
 
 tests: ## Run unit tests
-	docker compose run --rm --remove-orphans graphene_federation py.test tests --cov=graphene_federation -vv
+	docker compose run --rm --remove-orphans graphene_federation pytest tests --cov=graphene_federation -vv
 .PHONY: tests
 
 check-style: ## Run linting
