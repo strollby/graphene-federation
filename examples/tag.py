@@ -1,6 +1,12 @@
 import graphene
 
-from graphene_federation import LATEST_VERSION, build_schema, inaccessible, shareable, tag
+from graphene_federation import (
+    LATEST_VERSION,
+    build_schema,
+    inaccessible,
+    shareable,
+    tag,
+)
 
 
 class Product(graphene.ObjectType):

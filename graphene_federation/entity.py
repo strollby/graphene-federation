@@ -4,6 +4,8 @@ from typing import Any
 from typing import Dict, Type
 
 from graphene import Enum, Field, List, NonNull, ObjectType, Scalar, Union
+from graphene.types.enum import EnumMeta
+from graphene.types.objecttype import ObjectTypeMeta
 from graphene.types.schema import TypeMap
 from graphene_directives import Schema
 from graphene_directives.utils import has_non_field_attribute
@@ -50,6 +52,19 @@ def get_entity_cls(entities: Dict[str, Any]) -> Type[Union]:
     return _Entity
 
 
+def get_base_type_of_list(field: List) -> Type[ObjectType | Union | Scalar]:
+    while hasattr(field, "of_type"):
+        field = field.of_type
+    return field
+
+
+def get_base_type_of_field(field: Field) -> Type[ObjectType | Union | Scalar]:
+    type = field.type
+    while hasattr(type, "of_type"):
+        type = type.of_type
+    return type
+
+
 def get_entity_query(schema: Schema):
     """
     Create Entity query.
@@ -88,32 +103,29 @@ def get_entity_query(schema: Schema):
                         continue
 
                     field = getattr(model, model_field)
-                    if isinstance(field, Field) and isinstance(value, dict):
+                    if (
+                        isinstance(field, Field)
+                        and (base_type := get_base_type_of_field(field))
+                        and isinstance(base_type, ObjectTypeMeta)
+                        and isinstance(value, dict)
+                    ):
                         if value.get("__typename") is None:
-                            value["__typename"] = field.type.of_type._meta.name  # noqa
+                            value["__typename"] = base_type._meta.name  # noqa
                         model_arguments[model_field] = EntityQuery.resolve_entities(
                             self,
                             info,
                             representations=[value],
                             sub_field_resolution=True,
                         ).pop()
-                    elif all(
-                        [
-                            isinstance(field, List),
-                            isinstance(value, list),
-                            any(
-                                [
-                                    (
-                                        hasattr(field, "of_type")
-                                        and issubclass(field.of_type, ObjectType)
-                                    ),
-                                    (
-                                        hasattr(field, "of_type")
-                                        and issubclass(field.of_type, Union)
-                                    ),
-                                ]
-                            ),
-                        ]
+                    elif (
+                        isinstance(field, List)
+                        and isinstance(value, list)
+                        and any(
+                            [
+                                issubclass(get_base_type_of_list(field), ObjectType),
+                                issubclass(get_base_type_of_list(field), Union),
+                            ]
+                        )
                     ):
                         for sub_value in value:
                             if sub_value.get("__typename") is None:
@@ -126,9 +138,19 @@ def get_entity_query(schema: Schema):
                     elif isinstance(field, Scalar) and getattr(
                         field, "parse_value", None
                     ):
-                        model_arguments[model_field] = field.parse_value(value)
+                        model_arguments[model_field] = type(field).parse_value(value)
                     elif isinstance(field, Enum):
-                        model_arguments[model_field] = field._meta.enum[value]  # noqa
+                        model_arguments[model_field] = (
+                            field._meta.enum[value] if value else None
+                        )
+                    elif (
+                        isinstance(field, Field)
+                        and (base_type := get_base_type_of_field(field))
+                        and isinstance(base_type, EnumMeta)
+                    ):
+                        model_arguments[model_field] = (
+                            base_type._meta.enum[value] if value else None
+                        )
 
                 model_instance = model(**model_arguments)
 
