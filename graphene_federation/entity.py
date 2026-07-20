@@ -4,6 +4,7 @@ from typing import Any
 from typing import Dict, Type
 
 from graphene import Enum, Field, List, NonNull, ObjectType, Scalar, Union
+from graphene.types.definitions import GrapheneInterfaceType
 from graphene.types.enum import EnumMeta
 from graphene.types.objecttype import ObjectTypeMeta
 from graphene.types.schema import TypeMap
@@ -34,7 +35,7 @@ def get_entities(schema: Schema) -> Dict[str, Any]:
                 has_non_field_attribute(graphene_type, key_directive),
                 has_non_field_attribute(graphene_type, extends_directive),
             ]
-        )
+        ) and not isinstance(type_, GrapheneInterfaceType)
         if is_entity:
             entities[type_name] = graphene_type
     return entities
@@ -87,6 +88,32 @@ def get_entity_query(schema: Schema):
             entities = []
             for representation in representations:
                 type_ = schema.graphql_schema.get_type(representation["__typename"])
+
+                # @interfaceObject subgraphs never learn concrete types, so the router may ask this
+                # interface's own subgraph to resolve a representation keyed by the interface name
+                # itself. `type_.graphene_type` is then the raw Interface class, which can't be
+                # instantiated - dispatch to a `_resolve_reference` on the interface instead.
+                if isinstance(type_, GrapheneInterfaceType):
+                    graphene_type = type_.graphene_type
+                    resolver = getattr(graphene_type, "_resolve_reference", None)
+                    if resolver is None:
+                        raise TypeError(
+                            f"Entity interface {graphene_type.__name__!r} has no "
+                            "_resolve_reference to dispatch a representation keyed by the "
+                            "interface's own typename (this happens when another subgraph "
+                            "only knows the interface via @interfaceObject). Add a "
+                            "`_resolve_reference` staticmethod to it, the same way concrete "
+                            "entities do."
+                        )
+                    representation_fields = {
+                        k: v for k, v in representation.items() if k != "__typename"
+                    }
+                    representation_proxy = type(
+                        "InterfaceRepresentationProxy", (), representation_fields
+                    )
+                    entities.append(resolver(representation_proxy, info))
+                    continue
+
                 model = type_.graphene_type
                 model_arguments = representation.copy()
                 model_arguments.pop("__typename")
