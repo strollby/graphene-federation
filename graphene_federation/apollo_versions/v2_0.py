@@ -48,7 +48,6 @@ requires_directive = CustomDirective(
     input_transform=fields_set_case_transform,
 )
 
-
 provides_directive = CustomDirective(
     name="provides",
     locations=[
@@ -63,7 +62,6 @@ provides_directive = CustomDirective(
     input_transform=fields_set_case_transform,
 )
 
-
 external_directive = CustomDirective(
     name="external",
     locations=[
@@ -74,7 +72,6 @@ external_directive = CustomDirective(
     add_definition_to_schema=False,
 )
 
-
 shareable_directive = CustomDirective(
     name="shareable",
     locations=[
@@ -84,7 +81,6 @@ shareable_directive = CustomDirective(
     description="Federation @shareable directive",
     add_definition_to_schema=False,
 )
-
 
 override_directive = CustomDirective(
     name="override",
@@ -130,6 +126,7 @@ tag_directive = CustomDirective(
         DirectiveLocation.INPUT_OBJECT,
         DirectiveLocation.INPUT_FIELD_DEFINITION,
     ],
+    args={"name": GraphQLArgument(GraphQLNonNull(GraphQLString))},
     description="Federation @tag directive",
     add_definition_to_schema=False,
 )
