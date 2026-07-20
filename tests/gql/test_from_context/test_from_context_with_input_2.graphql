@@ -1,5 +1,5 @@
 extend schema
-	@link(url: "https://specs.apollo.dev/federation/v2.14", import: ["@from_context"])
+	@link(url: "https://specs.apollo.dev/federation/v2.14", import: ["@fromContext"])
 
 type Query {
   acme: Acme
@@ -8,7 +8,7 @@ type Query {
 type Acme  {
   id: ID!
   age: Int
-  foo(someInput: String @from_context(field: "$context1 ... on A { someField } ... on B { someField } ... on C { someOtherField }")): String
+  foo(someInput: String @fromContext(field: "$context1 ... on A { someField } ... on B { someField } ... on C { someOtherField }")): String
 }
 
 """

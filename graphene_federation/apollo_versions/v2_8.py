@@ -21,7 +21,7 @@ context_directive = CustomDirective(
 )
 
 from_context_directive = CustomDirective(
-    name="from_context",
+    name="fromContext",
     locations=[
         DirectiveLocation.ARGUMENT_DEFINITION,
     ],
@@ -34,7 +34,7 @@ from_context_directive = CustomDirective(
 )
 
 
-# Added directives @context, @from_context
+# Added directives @context, @fromContext
 def get_directives() -> dict[str, GraphQLDirective]:
     directives = get_directives_v2_7()
     directives.update(

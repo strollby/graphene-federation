@@ -37,7 +37,7 @@ def from_context(
 
     Reference: https://www.apollographql.com/docs/graphos/schema-design/federated-schemas/reference/directives#fromcontext
     """
-    directive = get_directive_from_name("from_context", federation_version)
+    directive = get_directive_from_name("fromContext", federation_version)
     decorator = directive_decorator(directive)
 
     field = validate_from_context_field_str(directive, field)
